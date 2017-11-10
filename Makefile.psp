@@ -1,0 +1,25 @@
+TARGET	:=	HydraCloneLabyrinth
+OBJS = source/main.o source/PHL.o source/collision.o source/psp/graphics.o source/psp/input.o source/psp/system.o source/psp/audio.o source/titlescreen.o source/inventory.o source/options.o source/ini.o source/text.o source/game.o source/hero.o source/object.o source/enemy.o source/effect.o source/qda.o source/weapon.o source/platform.o source/enemies/slime.o source/enemies/bat.o source/enemies/slug.o source/enemies/knight.o source/enemies/heads.o source/enemies/gas.o source/enemies/skull.o source/enemies/fish.o source/enemies/waterjumper.o source/enemies/podoboo.o source/enemies/thwomp.o source/enemies/dodo.o source/enemies/batboss.o source/enemies/skeleton.o source/enemies/ghoul.o source/enemies/crab.o source/enemies/seal.o source/enemies/jellyfish.o source/enemies/gyra.o source/enemies/wizard.o source/enemies/pendulum.o source/enemies/lolidra.o source/enemies/bee.o source/enemies/devil.o source/enemies/boar.o source/enemies/firewheel.o source/enemies/golem.o source/enemies/garm.o source/enemies/poisonknight.o source/enemies/dog.o source/enemies/boomknight.o source/enemies/pumpkin.o source/stagedata.o source/enemies/hydra.o
+
+INCDIR = 
+CFLAGS = -O2 -g -G0 -Wall -D_PSP
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+LIBDIR =
+
+MYLIBS=
+STDLIBS =  -losl -lpng -lz \
+		   -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgu -lpspaudiolib -lpspaudio -lm -lpsphprm
+
+LIBS +=$(STDLIBS)$(MYLIBS)
+
+LDFLAGS =
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = Hydra Castle Labyrinth
+PSP_EBOOT_ICON = ICON0.PNG
+PSP_EBOOT_PIC1 = PIC1.PNG
+#PSP_FW_VERSION = 660
+BUILD_PRX = 0
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
