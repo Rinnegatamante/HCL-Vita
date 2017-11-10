@@ -14,8 +14,6 @@ typedef struct {
 	int tileY[16][12];
 } PHL_Background;
 
-vita2d_texture* backBuffer;
-
 void PHL_GraphicsInit();
 void PHL_GraphicsExit();
 

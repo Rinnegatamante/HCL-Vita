@@ -23,7 +23,6 @@ void vita2d_texture_set_pixel(vita2d_texture* texture, int x, int y, unsigned in
 void PHL_GraphicsInit()
 {
 	vita2d_init_advanced(0x800000);
-	backBuffer = vita2d_create_empty_texture_format(960, 544, SCE_GXM_TEXTURE_FORMAT_A8B8G8R8);
 	border = vita2d_load_PNG_file("ux0:data/HCL/borders/border0.png");
 }
 
