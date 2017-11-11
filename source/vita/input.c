@@ -10,10 +10,10 @@ void PHL_ScanInput()
 	sceCtrlPeekBufferPositive(0, &pad, 1);
 	uint32_t kDown = pad.buttons;
 		
-	updateKey(&btnUp, kDown & SCE_CTRL_UP);
-	updateKey(&btnDown, kDown & SCE_CTRL_DOWN);
-	updateKey(&btnLeft, kDown & SCE_CTRL_LEFT);
-	updateKey(&btnRight, kDown & SCE_CTRL_RIGHT);
+	updateKey(&btnUp, (kDown & SCE_CTRL_UP) || (pad.ly < 70));
+	updateKey(&btnDown, kDown & SCE_CTRL_DOWN || (pad.ly > 170));
+	updateKey(&btnLeft, kDown & SCE_CTRL_LEFT || (pad.lx < 70));
+	updateKey(&btnRight, kDown & SCE_CTRL_RIGHT || (pad.lx > 170));
 	
 	updateKey(&btnStart, kDown & SCE_CTRL_START);
 	updateKey(&btnSelect, kDown & SCE_CTRL_SELECT);

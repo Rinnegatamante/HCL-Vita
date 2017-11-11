@@ -55,6 +55,7 @@ int main(int argc, char **argv)
 		memset(&appUtilBootParam, 0, sizeof(SceAppUtilBootParam));
 		sceAppUtilInit(&appUtilParam, &appUtilBootParam);
 		sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_ENTER_BUTTON, (int *)&enterButton);
+		sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG);
 		
 		// Checking if data files are available on ux0 partition
 		FILE* f = fopen("ux0:data/HCL/bmp.qda", "rb");
