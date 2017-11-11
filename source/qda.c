@@ -20,12 +20,10 @@ int initQDA()
 		strcat(fullPath, "romfs:/");
 	#endif
 	#ifdef _PSP2
-		if (use_uma0) strcat(fullPath, "uma0");
-		else strcat(fullPath, "ux0");
-		strcat(fullPath, ":data/HCL/");
-	#endif
+		sprintf(fullPath, "%s:data/HCL/bmp.qda", use_uma0 ? "uma0" : "ux0");
+	#else
 	strcat(fullPath, "bmp.qda");
-	
+	#endif
 	if ( (f = fopen(fullPath, "rb")) ) {
 		result = 1;
 		

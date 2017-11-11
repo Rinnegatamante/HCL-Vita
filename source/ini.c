@@ -23,16 +23,19 @@ void iniInit()
 	//Build filepath
 	char fullPath[128];
 	{
+		#ifndef _PSP2
 		strcpy(fullPath, "");
+		#endif
 		#ifdef _3DS
 			strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 		#endif
 		#ifdef _PSP2
-			if (use_uma0) strcat(fullPath, "uma0");
-			else strcat(fullPath, "ux0");
-			strcat(fullPath, ":data/HCL/");
+			if (use_uma0) sprintf(fullPath, "uma0:data/HCL/system.ini");
+			else sprintf(fullPath, "ux0:data/HCL/system.ini");
 		#endif
+		#ifndef _PSP2
 		strcat(fullPath, "system.ini");
+		#endif
 	}
 	
 	FILE* f;
@@ -56,16 +59,19 @@ void saveSettings()
 	//Build filepath
 	char fullPath[128];
 	{
+		#ifndef _PSP2
 		strcpy(fullPath, "");
+		#endif
 		#ifdef _3DS
 			strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 		#endif
 		#ifdef _PSP2
-			if (use_uma0) strcat(fullPath, "uma0");
-			else strcat(fullPath, "ux0");
-			strcat(fullPath, ":data/HCL/");
+			if (use_uma0) sprintf(fullPath, "uma0:data/HCL/system.ini");
+			else sprintf(fullPath, "ux0:data/HCL/system.ini");
 		#endif
+		#ifndef _PSP2
 		strcat(fullPath, "system.ini");
+		#endif
 	}
 
 	FILE* f;
@@ -135,16 +141,19 @@ void loadSettings()
 	//Build filepath
 	char fullPath[128];
 	{
+		#ifndef _PSP2
 		strcpy(fullPath, "");
+		#endif
 		#ifdef _3DS
 			strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 		#endif
 		#ifdef _PSP2
-			if (use_uma0) strcat(fullPath, "uma0");
-			else strcat(fullPath, "ux0");
-			strcat(fullPath, ":data/HCL/");
+			if (use_uma0) sprintf(fullPath, "uma0:data/HCL/system.ini");
+			else sprintf(fullPath, "ux0:data/HCL/system.ini");
 		#endif
+		#ifndef _PSP2
 		strcat(fullPath, "system.ini");
+		#endif
 	}
 	
 	FILE* f;

@@ -153,17 +153,20 @@ void game()
 			if (fileExists("data/save.tmp"))
 			{
 				char fullPath[128];
+				#ifndef _PSP2
 				strcpy(fullPath, "");
+				#endif
 				#ifdef _3DS
 					strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 				#endif
 				#ifdef _PSP2
-					if (use_uma0) strcat(fullPath, "uma0");
-					else strcat(fullPath, "ux0");
-					strcat(fullPath, ":/data/HCL/");
+					if (use_uma0) sceIoRemove("uma0:data/HCL/data/save.tmp");
+					else sceIoRemove("ux0:data/HCL/data/save.tmp");
 				#endif
+				#ifndef _PSP2
 				strcat(fullPath, "data/save.tmp");
 				remove(fullPath);
+				#endif
 			}
 		}
 	}
@@ -639,17 +642,20 @@ void saveScreen()
 		if (fileExists("data/save.tmp"))
 		{
 			char fullPath[128];
+			#ifndef _PSP2
 			strcpy(fullPath, "");
+			#endif
 			#ifdef _3DS
 				strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 			#endif
 			#ifdef _PSP2
-				if (use_uma0) strcat(fullPath, "uma0");
-				else strcat(fullPath, "ux0");
-				strcat(fullPath, ":data/HCL/");
+				if (use_uma0) sceIoRemove("uma0:data/HCL/data/save.tmp");
+				else sceIoRemove("ux0:data/HCL/data/save.tmp");
 			#endif
+			#ifndef _PSP2
 			strcat(fullPath, "data/save.tmp");
 			remove(fullPath);
+			#endif
 		}
 	}
 }
@@ -925,25 +931,30 @@ void loadScreen()
 		sprintf(toChar, "%03d", fileNum);
 		
 		char dest[80];
+		#ifndef _PSP2
 		strcpy(dest, "");
+		#endif
 		#ifdef _3DS
 			strcat(dest, "romfs:/map/");
 		#else
 			#ifdef _PSP2
-				if (use_uma0) strcat(dest, "uma0");
-				else strcat(dest, "ux0");
-				strcat(dest, ":data/HCL/map/");
+				if (cycle == 0) sprintf(dest, "%s:data/HCL/map/%sa.map", use_uma0 ? "uma0" : "ux0", toChar);
+				else sprintf(dest, "%s:data/HCL/map/%s.map", use_uma0 ? "uma0" : "ux0", toChar);
 			#else
 				strcat(dest, "romfs/map/");
 			#endif
 		#endif
+		
+		#ifndef _PSP2
 		strcat(dest, toChar);
+		
 		
 		//load background on first pass
 		if (cycle == 0) {
 			strcat(dest, "a");
 		}
 		strcat(dest, ".map");
+		#endif
 		
 		//Read file
 		FILE* file;
@@ -1026,9 +1037,7 @@ void loadScreen()
 		strcpy(dest, "romfs:/obj/");
 	#else
 		#ifdef _PSP2
-			if (use_uma0) strcpy(dest, "uma0");
-			else strcpy(dest, "ux0");
-			strcat(dest, ":data/HCL/obj/");
+			sprintf(dest, "%s:data/HCL/obj/%s.dat", use_uma0 ? "uma0" : "ux0", toChar);
 		#else
 			strcpy(dest, "romfs/obj/");
 		#endif
@@ -1041,8 +1050,10 @@ void loadScreen()
 		strcat(dest, "0");
 	}
 	*/
+	#ifndef _PSP2
 	strcat(dest, toChar);
 	strcat(dest, ".dat");
+	#endif
 	
 	FILE* file;
 	if ((file = fopen(dest, "rb"))) {
@@ -1417,17 +1428,19 @@ int writeSave(char* fname)
 	FILE* f;
 	
 	char fullPath[128];
+	#ifndef _PSP2
 	strcpy(fullPath, "");
+	#endif
 	#ifdef _3DS
 		strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 	#endif
 	#ifdef _PSP2
-		if (use_uma0) strcat(fullPath, "uma0");
-		else strcat(fullPath, "ux0");
-		strcat(fullPath, ":/data/HCL/");
+		sprintf(fullPath, "%s:data/HCL/%s", use_uma0 ? "uma0" : "ux0", fname);
 	#endif
+	#ifndef _PSP2
 	strcat(fullPath, fname);
-
+	#endif
+	
 	if ( (f = fopen(fullPath, "wb")) ) {
 		int size = 4548;
 		unsigned char* memblock = (unsigned char*)malloc(size);
@@ -1503,16 +1516,18 @@ void loadSave(char* fname)
 	FILE* f;
 	
 	char fullPath[128];
+	#ifndef _PSP2
 	strcpy(fullPath, "");
+	#endif
 	#ifdef _3DS
 		strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 	#endif
 	#ifdef _PSP2
-		if (use_uma0) strcat(fullPath, "uma0");
-		else strcat(fullPath, "ux0");
-		strcat(fullPath, ":/data/HCL/");
+		sprintf(fullPath, "%s:/data/HCL/%s", use_uma0 ? "uma0" : "ux0", fname);
 	#endif
+	#ifndef _PSP2
 	strcat(fullPath, fname);
+	#endif
 	
 	if ((f = fopen(fullPath, "rb"))) {
 		//Reminder: read order matters
@@ -1606,16 +1621,18 @@ int fileExists(char* fpath)
 	int result = 0;
 	
 	char fullPath[128];
+	#ifndef _PSP2
 	strcpy(fullPath, "");
+	#endif
 	#ifdef _3DS
 		strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 	#endif
 	#ifdef _PSP2
-		if (use_uma0) strcat(fullPath, "uma0");
-		else strcat(fullPath, "ux0");
-		strcat(fullPath, ":/data/HCL/");
+		sprintf(fullPath, "%s:data/HCL/%s", use_uma0 ? "uma0" : "ux0", fpath);
 	#endif
+	#ifndef _PSP2
 	strcat(fullPath, fpath);
+	#endif
 	
 	FILE* f;
 	if ( (f = fopen(fullPath, "rb")) ) {

@@ -73,20 +73,20 @@ void loadText()
 		strcpy(fullPath, "romfs:/");
 	#else
 		#ifdef _PSP2
-			if (use_uma0) strcpy(fullPath, "uma0");
-			else strcpy(fullPath, "ux0");
-			strcat(fullPath, ":data/HCL/");
+			sprintf(fullPath, "%s:data/HCL/%s", use_uma0 ? "uma0" : "ux0", (gameLanguage == ENGLISH) ? "en.dat" : "jp.dat");
 		#else
 			strcpy(fullPath, "romfs/");
 		#endif
 		
 	#endif
 	
+	#ifndef _PSP2
 	if (gameLanguage == ENGLISH) {
 		strcat(fullPath, "en.dat");
 	}else{
 		strcat(fullPath, "jp.dat");
 	}
+	#endif
 	
 	//printf("\n");
 	//printf(fullPath);

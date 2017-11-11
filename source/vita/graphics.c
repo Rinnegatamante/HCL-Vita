@@ -110,8 +110,8 @@ vita2d_texture* PHL_LoadBMP(int index)
 	unsigned char* QDAFile = (unsigned char*)malloc(headers[index].size);
 	
 	FILE* f = NULL;
-	if (use_uma0) fopen("uma0:data/HCL/bmp.qda", "rb");
-	else fopen("ux0:data/HCL/bmp.qda", "rb");
+	if (use_uma0) f = fopen("uma0:data/HCL/bmp.qda", "rb");
+	else f = fopen("ux0:data/HCL/bmp.qda", "rb");
 	if (f != NULL){
 		
 		//Load QDA file data
