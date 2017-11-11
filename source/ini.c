@@ -5,6 +5,10 @@
 #include <string.h>
 #include "text.h"
 
+#ifdef _PSP2
+extern uint8_t use_uma0;
+#endif
+
 //char* getFileLocation();
 char* trimString(char* orig);
 
@@ -24,7 +28,9 @@ void iniInit()
 			strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 		#endif
 		#ifdef _PSP2
-			strcat(fullPath, "ux0:data/HCL/");
+			if (use_uma0) strcat(fullPath, "uma0");
+			else strcat(fullPath, "ux0");
+			strcat(fullPath, ":data/HCL/");
 		#endif
 		strcat(fullPath, "system.ini");
 	}
@@ -55,7 +61,9 @@ void saveSettings()
 			strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 		#endif
 		#ifdef _PSP2
-			strcat(fullPath, "ux0:data/HCL/");
+			if (use_uma0) strcat(fullPath, "uma0");
+			else strcat(fullPath, "ux0");
+			strcat(fullPath, ":data/HCL/");
 		#endif
 		strcat(fullPath, "system.ini");
 	}
@@ -132,7 +140,9 @@ void loadSettings()
 			strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 		#endif
 		#ifdef _PSP2
-			strcat(fullPath, "ux0:data/HCL/");
+			if (use_uma0) strcat(fullPath, "uma0");
+			else strcat(fullPath, "ux0");
+			strcat(fullPath, ":data/HCL/");
 		#endif
 		strcat(fullPath, "system.ini");
 	}

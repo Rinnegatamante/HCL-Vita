@@ -5,6 +5,10 @@
 #include "PHL.h"
 #include "game.h"
 
+#ifdef _PSP2
+extern uint8_t use_uma0;
+#endif
+
 void loadMessage(Message* m, FILE* f);
 void trimMessage(Message* m);
 
@@ -69,7 +73,9 @@ void loadText()
 		strcpy(fullPath, "romfs:/");
 	#else
 		#ifdef _PSP2
-			strcpy(fullPath, "ux0:data/HCL/");
+			if (use_uma0) strcpy(fullPath, "uma0");
+			else strcpy(fullPath, "ux0");
+			strcat(fullPath, ":data/HCL/");
 		#else
 			strcpy(fullPath, "romfs/");
 		#endif

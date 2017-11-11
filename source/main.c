@@ -6,6 +6,7 @@
 
 #ifdef _PSP2
 extern int enterButton;
+uint8_t use_uma0 = 0; // 0 = ux0, 1 = uma0
 #endif
 
 void createSaveLocations()
@@ -21,9 +22,15 @@ void createSaveLocations()
 	#else
 		#ifdef _PSP2
 			//vita
-			sceIoMkdir("ux0:data/HCL", 0777);
-			sceIoMkdir("ux0:data/HCL/data", 0777);
-			sceIoMkdir("ux0:data/HCL/map", 0777);
+			if (use_uma0){
+				sceIoMkdir("uma0:data/HCL", 0777);
+				sceIoMkdir("uma0:data/HCL/data", 0777);
+				sceIoMkdir("uma0:data/HCL/map", 0777);
+			}else{
+				sceIoMkdir("ux0:data/HCL", 0777);
+				sceIoMkdir("ux0:data/HCL/data", 0777);
+				sceIoMkdir("ux0:data/HCL/map", 0777);
+			}
 		#else
 			//psp, wii
 			mkdir("/data", 0777);
@@ -48,6 +55,11 @@ int main(int argc, char **argv)
 		memset(&appUtilBootParam, 0, sizeof(SceAppUtilBootParam));
 		sceAppUtilInit(&appUtilParam, &appUtilBootParam);
 		sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_ENTER_BUTTON, (int *)&enterButton);
+		
+		// Checking if data files are available on ux0 partition
+		FILE* f = fopen("ux0:data/HCL/bmp.qda", "rb");
+		if (f == NULL) use_uma0 = 1;
+		else fclose(f);
 	#endif
 	
 	srand(time(NULL));

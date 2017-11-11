@@ -11,6 +11,7 @@
 uint8_t drawing_phase = 0;
 vita2d_texture* border = NULL;
 extern int in_game;
+extern uint8_t use_uma0;
 int border_idx = 0;
 
 void vita2d_texture_set_pixel(vita2d_texture* texture, int x, int y, unsigned int color){
@@ -23,7 +24,8 @@ void vita2d_texture_set_pixel(vita2d_texture* texture, int x, int y, unsigned in
 void PHL_GraphicsInit()
 {
 	vita2d_init_advanced(0x800000);
-	border = vita2d_load_PNG_file("ux0:data/HCL/borders/border0.png");
+	if (use_uma0) border = vita2d_load_PNG_file("uma0:data/HCL/borders/border0.png");
+	else border = vita2d_load_PNG_file("ux0:data/HCL/borders/border0.png");
 }
 
 void PHL_SwapBorder()
@@ -31,11 +33,12 @@ void PHL_SwapBorder()
 	char filename[128];
 	vita2d_free_texture(border);
 	border_idx++;
-	sprintf(filename, "ux0:data/HCL/borders/border%d.png", border_idx);
+	sprintf(filename, "%s:data/HCL/borders/border%d.png", use_uma0 ? "uma0" : "ux0", border_idx);
 	border = vita2d_load_PNG_file(filename);
 	if (border == NULL){
 		border_idx = 0;
-		border = vita2d_load_PNG_file("ux0:data/HCL/borders/border0.png");
+		if (use_uma0) border = vita2d_load_PNG_file("uma0:data/HCL/borders/border0.png");
+		else border = vita2d_load_PNG_file("ux0:data/HCL/borders/border0.png");
 	}
 }
 
@@ -106,7 +109,9 @@ vita2d_texture* PHL_LoadBMP(int index)
 	vita2d_texture* result = NULL;
 	unsigned char* QDAFile = (unsigned char*)malloc(headers[index].size);
 	
-	FILE* f = fopen("ux0:data/HCL/bmp.qda", "rb");
+	FILE* f = NULL;
+	if (use_uma0) fopen("uma0:data/HCL/bmp.qda", "rb");
+	else fopen("ux0:data/HCL/bmp.qda", "rb");
 	if (f != NULL){
 		
 		//Load QDA file data

@@ -8,6 +8,8 @@ extern "C"{
 #define NSAMPLES       2048    // Number of samples for output
 #define SOUND_CHANNELS    7    // PSVITA has 8 available audio channels, one is reserved for musics
 
+extern uint8_t use_uma0;
+
 SceUID AudioThreads[SOUND_CHANNELS + 1], Sound_Mutex, NewSound_Mutex, Music_Mutex, NewMusic_Mutex;
 DecodedMusic* new_sound = NULL;
 DecodedMusic* new_music = NULL;
@@ -176,11 +178,10 @@ void PHL_AudioClose()
 	// Starting exit procedure for audio threads
 	mustExit = true;
 	sceKernelSignalSema(Sound_Mutex, 1);
-	for (int i=0;i<SOUND_CHANNELS;i++){
+	sceKernelSignalSema(Music_Mutex, 1);
+	for (int i=0;i<=SOUND_CHANNELS;i++){
 		sceKernelWaitThreadEnd(AudioThreads[i], NULL, NULL);
 	}
-	sceKernelSignalSema(Music_Mutex, 1);
-	sceKernelWaitThreadEnd(AudioThreads[SOUND_CHANNELS], NULL, NULL);
 	mustExit = false;
 		
 	// Deleting audio mutex
@@ -194,7 +195,7 @@ void PHL_AudioClose()
 PHL_Music PHL_LoadMusic(char* fname, int loop)
 {	
 	PHL_Music mus;
-	sprintf(mus.filepath, "ux0:data/HCL/%s.mid", fname);
+	sprintf(mus.filepath, "%s:data/HCL/%s.mid", use_uma0 ? "uma0" : "ux0", fname);
 	mus.loop = loop;
 	mus.audiobuf = NULL;
 	mus.audioThread = 0xFF;
@@ -204,7 +205,7 @@ PHL_Music PHL_LoadMusic(char* fname, int loop)
 PHL_Sound PHL_LoadSound(char* fname)
 {
 	PHL_Sound snd;
-	sprintf(snd.filepath, "ux0:data/HCL/%s", fname);
+	sprintf(snd.filepath, "%s:data/HCL/%s", use_uma0 ? "uma0" : "ux0", fname);
 	snd.loop = 0;
 	snd.audiobuf = NULL;
 	snd.audioThread = 0xFF;

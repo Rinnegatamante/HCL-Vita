@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _PSP2
+extern uint8_t use_uma0;
+#endif
+
 //Load headers for each image
 //Returns: 0 = file not found | 1 = success | 2 = Invalid file
 int initQDA()
@@ -16,7 +20,9 @@ int initQDA()
 		strcat(fullPath, "romfs:/");
 	#endif
 	#ifdef _PSP2
-		strcat(fullPath, "ux0:data/HCL/");
+		if (use_uma0) strcat(fullPath, "uma0");
+		else strcat(fullPath, "ux0");
+		strcat(fullPath, ":data/HCL/");
 	#endif
 	strcat(fullPath, "bmp.qda");
 	

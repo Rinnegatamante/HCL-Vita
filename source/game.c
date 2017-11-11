@@ -14,6 +14,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef _PSP2
+extern uint8_t use_uma0;
+#endif
+
 int gameStep();
 void gameDraw(char doDrawHud);
 
@@ -154,7 +158,9 @@ void game()
 					strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 				#endif
 				#ifdef _PSP2
-					strcat(fullPath, "ux0:/data/HCL/");
+					if (use_uma0) strcat(fullPath, "uma0");
+					else strcat(fullPath, "ux0");
+					strcat(fullPath, ":/data/HCL/");
 				#endif
 				strcat(fullPath, "data/save.tmp");
 				remove(fullPath);
@@ -638,7 +644,9 @@ void saveScreen()
 				strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 			#endif
 			#ifdef _PSP2
-				strcat(fullPath, "ux0:data/HCL/");
+				if (use_uma0) strcat(fullPath, "uma0");
+				else strcat(fullPath, "ux0");
+				strcat(fullPath, ":data/HCL/");
 			#endif
 			strcat(fullPath, "data/save.tmp");
 			remove(fullPath);
@@ -922,7 +930,9 @@ void loadScreen()
 			strcat(dest, "romfs:/map/");
 		#else
 			#ifdef _PSP2
-				strcat(dest, "ux0:data/HCL/map/");
+				if (use_uma0) strcat(dest, "uma0");
+				else strcat(dest, "ux0");
+				strcat(dest, ":data/HCL/map/");
 			#else
 				strcat(dest, "romfs/map/");
 			#endif
@@ -1016,7 +1026,9 @@ void loadScreen()
 		strcpy(dest, "romfs:/obj/");
 	#else
 		#ifdef _PSP2
-			strcpy(dest, "ux0:data/HCL/obj/");
+			if (use_uma0) strcpy(dest, "uma0");
+			else strcpy(dest, "ux0");
+			strcat(dest, ":data/HCL/obj/");
 		#else
 			strcpy(dest, "romfs/obj/");
 		#endif
@@ -1410,8 +1422,9 @@ int writeSave(char* fname)
 		strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 	#endif
 	#ifdef _PSP2
-		sceIoMkdir("ux0:/data/HCL/data", 0777);
-		strcat(fullPath, "ux0:/data/HCL/");
+		if (use_uma0) strcat(fullPath, "uma0");
+		else strcat(fullPath, "ux0");
+		strcat(fullPath, ":/data/HCL/");
 	#endif
 	strcat(fullPath, fname);
 
@@ -1495,7 +1508,9 @@ void loadSave(char* fname)
 		strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 	#endif
 	#ifdef _PSP2
-		strcat(fullPath, "ux0:/data/HCL/");
+		if (use_uma0) strcat(fullPath, "uma0");
+		else strcat(fullPath, "ux0");
+		strcat(fullPath, ":/data/HCL/");
 	#endif
 	strcat(fullPath, fname);
 	
@@ -1596,7 +1611,9 @@ int fileExists(char* fpath)
 		strcat(fullPath, "sdmc:/3ds/appdata/HydraCastleLabyrinth/");
 	#endif
 	#ifdef _PSP2
-		strcat(fullPath, "ux0:/data/HCL/");
+		if (use_uma0) strcat(fullPath, "uma0");
+		else strcat(fullPath, "ux0");
+		strcat(fullPath, ":/data/HCL/");
 	#endif
 	strcat(fullPath, fpath);
 	
