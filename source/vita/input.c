@@ -18,8 +18,8 @@ void PHL_ScanInput()
 	updateKey(&btnStart, kDown & SCE_CTRL_START);
 	updateKey(&btnSelect, kDown & SCE_CTRL_SELECT);
 	
-	updateKey(&btnFaceRight, kDown & SCE_CTRL_CROSS);
-	updateKey(&btnFaceDown, kDown & SCE_CTRL_CIRCLE);
+	updateKey(&btnFaceRight, kDown & SCE_CTRL_CIRCLE);
+	updateKey(&btnFaceDown, kDown & SCE_CTRL_CROSS);
 	updateKey(&btnFaceLeft, kDown & SCE_CTRL_SQUARE);
 	
 	updateKey(&btnL, kDown & SCE_CTRL_LTRIGGER);
