@@ -26,7 +26,7 @@ void pretitleScreen(){
 		
 		//Draw pre-titlescreen
 		PHL_StartDrawing();
-		PHL_DrawTextBoldCentered("HYDRA CASTLE LABYRINTH VITA V.1.0", 320, 30, YELLOW);
+		PHL_DrawTextBoldCentered("HYDRA CASTLE LABYRINTH VITA V.1.1", 320, 30, YELLOW);
 		PHL_DrawTextBoldCentered("BY RINNEGATAMANTE", 320, 50, YELLOW);
 		PHL_DrawTextBoldCentered("THANKS TO ALL DISTINGUISHED PATRONERS", 320, 100, YELLOW);
 		PHL_DrawTextBoldCentered("FOR THEIR AWESOME SUPPORT:", 320, 120, YELLOW);
