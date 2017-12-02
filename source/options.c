@@ -102,6 +102,8 @@ int optionsStep()
 			if (optCursor == 0) {
 				if (getLanguage() == JAPANESE) {
 					setLanguage(ENGLISH);
+				} else if (getLanguage() == ENGLISH) {
+					setLanguage(SPANISH);
 				}else{
 					setLanguage(JAPANESE);
 				}
@@ -190,12 +192,24 @@ void optionsDraw()
 		
 		//Language
 		PHL_DrawTextBold("LANGUAGE", xleft, ydraw, YELLOW);
-		if (getLanguage() == 1) {
-			PHL_DrawTextBold("EN", xright, ydraw, YELLOW);
+		switch (getLanguage()) {
+			case JAPANESE:
+				PHL_DrawTextBold("JP", xright, ydraw, YELLOW);
+				break;
+			default:
+			case ENGLISH:
+				PHL_DrawTextBold("EN", xright, ydraw, YELLOW);
+				break;
+			case SPANISH:
+				PHL_DrawTextBold("ES", xright, ydraw, YELLOW);
+				break;
 		}
-		if (getLanguage() == 0) {
-			PHL_DrawTextBold("JP", xright, ydraw, YELLOW);
-		}
+		//if (getLanguage() == 1) {
+		//	PHL_DrawTextBold("EN", xright, ydraw, YELLOW);
+		//}
+		//if (getLanguage() == 0) {
+		//	PHL_DrawTextBold("JP", xright, ydraw, YELLOW);
+		//}
 		
 		ydraw += ystep;
 		optioncount++;
