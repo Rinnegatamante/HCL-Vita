@@ -3,6 +3,7 @@
 
 #define JAPANESE 0
 #define ENGLISH 1
+#define SPANISH 2
 
 char gameLanguage;
 

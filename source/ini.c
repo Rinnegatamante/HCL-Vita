@@ -121,6 +121,9 @@ void saveSettings()
 		if (getLanguage() == 1) {
 			fprintf(f, "en");
 		}
+		if (getLanguage() == 2) {
+			fprintf(f, "es");
+		}
 		
 		//Autosave
 		fprintf(f, "\r\nautosave=");
@@ -300,6 +303,9 @@ void languageLoad(char* first, char* second)
 		}
 		if (strcmp(second, "jp") == 0) {
 			setLanguage(JAPANESE);
+		}
+		if (strcmp(second, "es") == 0) {
+			setLanguage(SPANISH);
 		}
 	}
 }
