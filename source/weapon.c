@@ -214,6 +214,7 @@ void weaponStep(Weapon* w)
 		//Destroy if out of view or collides with wall
 		if (w->x > 640 || w->x + 40 < 0 || checkTileCollision(1, w->weaponMask) == 1) {
 			weaponHit(w);
+			if (w == NULL) return;
 		}
 		
 		w->x += w->hsp;
@@ -235,6 +236,7 @@ void weaponStep(Weapon* w)
 				w->vsp = 0;
 			}else{
 				weaponHit(w);
+				if (w == NULL) return;
 			}
 		}
 		
@@ -326,6 +328,7 @@ void weaponStep(Weapon* w)
 					PHL_PlaySound(sounds[sndPi02], 2);
 				}else{
 					weaponHit(w);
+					if (w == NULL) return;
 					dead = 1;
 				}
 				w->timer += 1;			
