@@ -15,21 +15,21 @@ OBJS     := $(addsuffix .o,$(BINFILES)) $(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
 PREFIX  = arm-vita-eabi
 CC      = $(PREFIX)-gcc
 CXX      = $(PREFIX)-g++
-CFLAGS  = -fno-lto -g -Wl,-q -O2 -D_PSP2 -DHAVE_LIBSPEEXDSP \
+# Preserve legacy callback conventions and tentative globals shared by headers.
+CFLAGS  = -std=gnu17 -fcommon -fno-lto -g -Wl,-q -O2 -D_PSP2 -DHAVE_LIBSPEEXDSP \
 		-DWANT_FMMIDI=1 -DUSE_AUDIO_RESAMPLER -DWANT_FASTWAV
-CXXFLAGS  = $(CFLAGS) -fno-exceptions -std=gnu++11 -fpermissive
+CXXFLAGS  = $(filter-out -std=gnu17 -fcommon,$(CFLAGS)) -fno-exceptions -std=gnu++11 -fpermissive
 ASFLAGS = $(CFLAGS)
 
 all: $(TARGET).vpk
 
 $(TARGET).vpk: $(TARGET).velf
-	vita-make-fself -s $< build\eboot.bin
+	vita-make-fself -s $< build/eboot.bin
 	vita-mksfoex -s TITLE_ID=$(TITLE) "$(VPK_TITLE)" param.sfo
 	cp -f param.sfo build/sce_sys/param.sfo
-	
-	#------------ Comment this if you don't have 7zip ------------------
-	7z a -tzip $(TARGET).vpk -r .\build\sce_sys\* .\build\eboot.bin 
-	#-------------------------------------------------------------------
+	vita-pack-vpk -s param.sfo -b build/eboot.bin \
+		--add build/sce_sys/icon0.png=sce_sys/icon0.png \
+		--add build/sce_sys/livearea=sce_sys/livearea $@
 
 %.velf: %.elf
 	cp $< $<.unstripped.elf
